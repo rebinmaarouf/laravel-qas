@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Question;
 use App\Models\User;
+use Faker\Factory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,11 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $user = User::factory(3)
+            ->has(Question::factory()->count(3), 'questions')
+            ->create();
+
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
     }
 }
