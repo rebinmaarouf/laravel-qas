@@ -13,3 +13,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('questions', QuestionsController::class);
+// Route::get('question/{id}/show', [QuestionsController::class, 'show'])->name('question.show');
