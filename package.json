@@ -3,12 +3,11 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite",
-        "watch": "vite build --watch"
+        "dev": "vite"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
-        "@vitejs/plugin-vue": "^4.6.2",
+        "@vitejs/plugin-vue": "^4.5.0",
         "autoprefixer": "^10.4.20",
         "axios": "^1.7.4",
         "bootstrap": "^5.2.3",
