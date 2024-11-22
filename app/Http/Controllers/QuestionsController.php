@@ -24,6 +24,8 @@ class QuestionsController extends Controller
     public function create()
     {
         //
+        $question = new Question();
+        return view('questions.create', compact('question'));
     }
 
     /**
@@ -32,6 +34,10 @@ class QuestionsController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'body' => 'required'
+        ]);
     }
 
     /**

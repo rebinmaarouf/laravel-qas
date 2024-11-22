@@ -14,3 +14,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('questions', QuestionsController::class);
 // Route::get('question/{id}/show', [QuestionsController::class, 'show'])->name('question.show');
+// Route::get('questions/create', [QuestionsController::class, 'create'])->name('questions.create');
