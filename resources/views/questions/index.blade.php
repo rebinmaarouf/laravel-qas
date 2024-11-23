@@ -28,30 +28,35 @@
                                         <strong>{{ $question->answer }}</strong>{{ Str::plural('answer', $question->answer) }}
                                     </div>
 
-                                    <div class="views">
+                                    <div class="view">
                                         {{ $question->views . ' ' . Str::plural('views', $question->views) }}
                                     </div>
                                 </div>
 
-                                <div class="media-body float-none">
-                                    <div class="d-flex align-items-center">
+                                <div class="media-body">
+                                    <div class="d-flex align-content-center flex-wrap">
                                         <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                         <div class="ms-auto">
                                             <a href="{{ route('questions.edit', $question->id) }}"
                                                 class="btn btn-sm btn-outline-info">Edit</a>
+                                            <form action="{{ route('questions.destroy', $question->id) }}" method="post"
+                                                class="form-delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                    onclick="return confirm('Are you sure?')">Delete</button>
+                                            </form>
                                         </div>
-
+                                        <p class="lead">
+                                            Asked by
+                                            <a href=" {{ $question->user->url }}">
+                                                {{ $question->user->name }}</a>
+                                            <small class="text-muted"> {{ $question->created_date }}</small>
+                                        </p>
+                                        {{ Str::limit($question->body, 250) }}
                                     </div>
-                                    <p class="lead">
-                                        Asked by
-                                        <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
-                                        <small class="text-muted">{{ $question->created_date }}</small>
-                                    </p>
-                                    {{ Str::limit($question->body, 250) }}
-
                                 </div>
-                            </div>
-                            <hr>
+                                <hr>
                         @endforeach
                         <div class="pagination justify-content-center">
 
