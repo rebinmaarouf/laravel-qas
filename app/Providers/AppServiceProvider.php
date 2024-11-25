@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use App\Models\Question;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,6 +29,13 @@ class AppServiceProvider extends ServiceProvider
 
         Route::bind('slug', function ($slug) {
             return $question = Question::where('slug', $slug)->first() ?? abort(404);
+
+            Gate::define('update-question', function (User $user, Question $question) {
+                return $user->id === $question->user_id;
+            });
+            Gate::define('delete-question', function (User $user, Question $question) {
+                return $user->id === $question->user_id;
+            });
         });
     }
 }

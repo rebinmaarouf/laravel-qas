@@ -37,15 +37,19 @@
                                     <div class="d-flex align-content-center flex-wrap">
                                         <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                         <div class="ms-auto">
-                                            <a href="{{ route('questions.edit', $question->id) }}"
-                                                class="btn btn-sm btn-outline-info">Edit</a>
-                                            <form action="{{ route('questions.destroy', $question->id) }}" method="post"
-                                                class="form-delete">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                    onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
+                                            @if (Auth::user()->can('update-question', $question))
+                                                <a href="{{ route('questions.edit', $question->id) }}"
+                                                    class="btn btn-sm btn-outline-info">Edit</a>
+                                            @endif
+                                            @if (Auth::user()->can('delete-question', $question))
+                                                <form action="{{ route('questions.destroy', $question->id) }}"
+                                                    method="post" class="form-delete">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                        onclick="return confirm('Are you sure?')">Delete</button>
+                                                </form>
+                                            @endif
                                         </div>
                                         <p class="lead">
                                             Asked by
