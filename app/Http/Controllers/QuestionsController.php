@@ -2,16 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AskQuestionRequest;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\AskQuestionRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
+
 
 class QuestionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    // public static function middleware(): array
+    // {
+    //     return [
+
+    //         new Middleware(Auth::class, except: ['index', 'show']),
+    //     ];
+    // }
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['expect' => ['index', 'show']]);
+    }
+
     public function index()
     {
         //
@@ -53,6 +72,8 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
+        $this->authorize('update', $question);
+
         return view('questions.edit', compact('question'));
     }
 
@@ -61,6 +82,8 @@ class QuestionsController extends Controller
      */
     public function update(AskQuestionRequest $request, Question $question)
     {
+        $this->authorize('update', $question);
+
         $question->update($request->only('title', 'body'));
         return redirect()->route('questions.index')->with('success', 'Your Question has been updated successfully');
     }
@@ -70,6 +93,8 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        $this->authorize('delete', $question);
+
         $question->delete();
         return redirect()->route('questions.index')->with('success', 'Your Question has been Deleted');
     }

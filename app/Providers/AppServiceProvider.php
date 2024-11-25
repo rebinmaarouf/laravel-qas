@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Question;
+use App\Policies\Questionpolicy;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,5 +30,7 @@ class AppServiceProvider extends ServiceProvider
         Route::bind('slug', function ($slug) {
             return $question = Question::where('slug', $slug)->first() ?? abort(404);
         });
+
+        Gate::policy(Question::class, Questionpolicy::class);
     }
 }

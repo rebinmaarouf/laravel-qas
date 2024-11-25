@@ -1,12 +1,20 @@
 <?php
 
-use App\Http\Controllers\QuestionsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\QuestionsController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::get('logout', function () {
+//     auth()->logout();
+//     Session()->flush();
+
+//     return Redirect::to('/');
+// })->name('logout');
 
 Auth::routes();
 
