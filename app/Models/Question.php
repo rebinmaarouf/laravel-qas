@@ -18,6 +18,11 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
     public function setTitleAttribute($value)
     {
 
@@ -37,7 +42,7 @@ class Question extends Model
 
     public function getStatusAttribute()
     {
-        if ($this->answer > 0) {
+        if ($this->answers_count > 0) {
             if ($this->best_answer_id) {
                 return "answered-accepted";
             }
