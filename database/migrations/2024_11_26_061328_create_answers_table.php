@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('question_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('question_id');
+            $table->unsignedBigInteger('user_id');
             $table->text('body');
             $table->integer('votes_count')->default(0);
             $table->timestamps();
