@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         Route::bind('slug', function ($slug) {
-            return $question = Question::where('slug', $slug)->first() ?? abort(404);
+            return $question = Question::with('answers.user')->where('slug', $slug)->first() ?? abort(404);
         });
 
         Gate::policy(Question::class, Questionpolicy::class);
