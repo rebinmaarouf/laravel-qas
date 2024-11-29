@@ -5,7 +5,9 @@
  */
 
 import './bootstrap';
-import { createApp } from 'vue';
+import './fontawesome'
+// import { createApp } from 'vue';
+import { createApp } from "vue/dist/vue.esm-bundler";
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
