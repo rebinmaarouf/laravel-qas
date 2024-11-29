@@ -16,12 +16,86 @@
                             </div>
                         </div>
 
-                        <div class="card-body">
-                            {!! $question->body_html !!}
-                        </div>
+                        <hr>
 
+                        <div class="media">
+                            <div class="float-start vote-controls">
+                                <a href="" title="This question is useful" class="vote-up">
+                                    <i class="fas fa-caret-up fa-2x"></i>
+                                </a>
+                                <span class="votes-count">1230</span>
+                                <a href="" title="This question is not useful" class="vote-down off">
+                                    <i class="fas fa-caret-down fa-2x"></i>
+                                </a>
+                                <a href="" title="Click to mark as favorite question (Click again to undo)"
+                                    class="favorite mt-2 favorited">
+                                    <i class="fas fa-star fa-2x"></i>
+                                    <span class="favorites-count">1234</span>
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                {!! $question->body_html !!}
+
+                                <div class="d-flex justify-content-end">
+                                    <div class="media">
+                                        <span class="text-muted">Answered {{ $question->created_date }}</span>
+                                        <div class="media-body d-flex justify-center">
+                                            <a href="{{ $question->user->url }}" class="pe-2"><img
+                                                    src="{{ $question->user->avatar }}" alt="" srcset=""></a>
+                                            <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card-body">
+                <div class="card-title">
+                    <h2>{{ $question->answers_count . ' ' . Str::plural('Answer', $question->answers_count) }}</h2>
+                </div>
+                <hr>
+                @foreach ($question->answers as $answer)
+                    <div class="media">
+                        <div class="float-start vote-controls">
+                            <a href="" title="This answer is useful" class="vote-up">
+                                <i class="fas fa-caret-up fa-1x"></i>
+                            </a>
+                            <span class="votes-count">1230</span>
+                            <a href="" title="This answer is not useful" class="vote-down off">
+                                <i class="fas fa-caret-down fa-1x"></i>
+                            </a>
+                            <a href="" title="mark this answer as best answer" class="vote-accepted mt-2">
+                                <i class="fas fa-check fa-1x"></i>
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            {!! $answer->body_html !!}
+                            <div class="d-flex justify-content-end">
+                                <div class="media">
+                                    <span class="text-muted">Answered {{ $answer->created_date }}</span>
+                                    <div class="media-body d-flex justify-center">
+                                        <a href="{{ $answer->user->url }}" class="pe-2"><img
+                                                src="{{ $answer->user->avatar }}" alt="" srcset=""></a>
+                                        <a href="{{ $answer->user->url }}">{{ $answer->user->name }}</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                @endforeach
+            </div>
+
+        </div>
+    </div>
+@endsection
