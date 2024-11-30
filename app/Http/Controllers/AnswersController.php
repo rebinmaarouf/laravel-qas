@@ -73,6 +73,6 @@ class AnswersController extends Controller
     {
         $this->authorize('delete', $answer);
         $answer->delete();
-        return redirect()->route('questions.show', $question->slug)->with('success', 'Your Question has been Deleted');
+        return back()->with('success', 'Your Answer has been Deleted');
     }
 }
