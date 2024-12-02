@@ -17,11 +17,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        $this->call([
+            UsersQuestionsAnswersTableSeeder::class,
+            FavoritesTableSeeder::class,
+        ]);
 
-        $user = User::factory(4)
-            ->has(Question::factory(count: 3)
-                ->has(Answer::factory(count: 5), 'answers'), 'questions')
-            ->create();
+        // $user = User::factory(4)
+        //     ->has(Question::factory(count: 3)
+        //         ->has(Answer::factory(count: 5), 'answers'), 'questions')
+        //     ->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcceptAnswerController;
 use App\Http\Controllers\AnswersController;
+use App\Http\Controllers\FavoritesControllerd;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
@@ -26,4 +27,7 @@ Route::resource('questions', QuestionsController::class)->except('show');
 Route::resource('questions.answers', AnswersController::class)->except(['index', 'create', 'show']);
 Route::get('/questions/{slug}', [QuestionsController::class, 'show'])->name('questions.show');
 Route::post('/answers/{answer}/accept', AcceptAnswerController::class)->name('answers.accept');
+Route::post('/questions/{question}/favorites', [FavoritesControllerd::class, 'store'])->name('questions.favorite');
+Route::delete('/questions/{question}/favorites', [FavoritesControllerd::class, 'destroy'])->name('questions.unfavorite');
+
 // Route::get('questions/create', [QuestionsController::class, 'create'])->name('questions.create');
