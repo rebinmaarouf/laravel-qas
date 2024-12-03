@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\VoteAnswerController;
 use App\Http\Controllers\VoteQuestionController;
 
 Route::get('/', function () {
@@ -32,6 +33,6 @@ Route::post('/questions/{question}/favorites', [FavoritesControllerd::class, 'st
 Route::delete('/questions/{question}/favorites', [FavoritesControllerd::class, 'destroy'])->name('questions.unfavorite');
 
 Route::post('/questions/{question}/vote', VoteQuestionController::class)->name('questions.vote');
-
+Route::post('/answers/{answer}/vote', VoteAnswerController::class);
 
 // Route::get('questions/create', [QuestionsController::class, 'create'])->name('questions.create');

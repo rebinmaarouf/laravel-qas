@@ -10,16 +10,30 @@
                 @foreach ($answers as $answer)
                     <div class="media">
                         <div class="float-start vote-controls">
-                            <a href="" title="This answer is useful" class="vote-up">
-                                <i class="fas fa-caret-up fa-1x"></i>
+                            <a href="" title="This answer is useful" class="vote-up{{ Auth::guest() ? 'off' : '' }}"
+                                onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{ $answer->id }}').submit();">
+                                <i class="fas fa-caret-up fa-2x"></i>
                             </a>
-                            <span class="votes-count">1230</span>
-                            <a href="" title="This answer is not useful" class="vote-down off">
-                                <i class="fas fa-caret-down fa-1x"></i>
+                            <form action="/answers/{{ $answer->id }}/vote" method="POST"
+                                id="up-vote-answer-{{ $answer->id }}" style="display: none">
+                                @csrf
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+                            <span class="votes-count">{{ $answer->votes_count }}</span>
+                            <a href="" title="This answer is not useful"
+                                class="vote-down {{ Auth::guest() ? 'off' : '' }}"
+                                onclick="event.preventDefault(); document.getElementById('down-vote-answer-{{ $answer->id }}').submit();">
+                                <i class="fas fa-caret-down fa-2x"></i>
                             </a>
+                            <form action="/answers/{{ $answer->id }}/vote" method="POST"
+                                id="down-vote-answer-{{ $answer->id }}" style="display: none">
+                                @csrf
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
 
                             @can('accept', $answer)
-                                <a href="" title="mark this answer as best answer" class="{{ $answer->status }} mt-2"
+                                <a href="" title="mark this answer as best answer"
+                                    class="{{ $answer->status }} mt-2"
                                     onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();">
                                     <i class="fas fa-check fa-1x"></i>
                                 </a>
@@ -43,12 +57,12 @@
                                 <div class="col-4">
                                     <div class="ms-auto">
                                         @can('update', $answer)
-                                            <a href="{{ route('questions.answers.edit', [$question->id, $answer->id]) }}"
+                                            <a href="{{ route('questions.answers.edit', [$answer->id, $answer->id]) }}"
                                                 class="btn btn-sm btn-outline-info">Edit</a>
                                         @endcan
                                         @can('delete', $answer)
                                             <form
-                                                action="{{ route('questions.answers.destroy', [$question->id, $answer->id]) }}"
+                                                action="{{ route('questions.answers.destroy', [$answer->id, $answer->id]) }}"
                                                 method="post" class="form-delete">
                                                 @csrf
                                                 @method('DELETE')

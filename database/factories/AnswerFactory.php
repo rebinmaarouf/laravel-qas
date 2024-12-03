@@ -22,7 +22,7 @@ class AnswerFactory extends Factory
         return [
             'body' => fake()->paragraph(rand(3, 7), true),
             'user_id' => fake()->randomElement(User::pluck('id')),
-            'votes_count' => rand(0, 5)
+            // 'votes_count' => rand(0, 5)
         ];
     }
 }
