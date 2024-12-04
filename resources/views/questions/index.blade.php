@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
@@ -58,7 +58,7 @@
                                             {{ $question->user->name }}</a>
                                         <small class="text-muted"> {{ $question->created_date }}</small>
                                     </p>
-                                    {{ Str::limit($question->body, 250) }}
+                                    <div class="excerpt">{{ $question->excerpt(250) }}</div>
                                 </div>
                             </div>
                             <hr>

@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use App\VotableTrait;
 use Parsedown;
+use App\VotableTrait;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\Console\Input\Input;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Question extends Model
 {
-    use HasFactory;
-    use VotableTrait;
-    //
+    use HasFactory, VotableTrait;
+
     protected $guarded = [];
 
     public function user()
@@ -31,6 +31,11 @@ class Question extends Model
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
+
+    // public function setBodyAttribute($value)
+    // {
+    //     $this->attributes['body'] = clean($value);
+    // }
 
     public function getUrlAttribute()
     {
@@ -55,7 +60,7 @@ class Question extends Model
 
     public function getBodyHtmlAttribute()
     {
-        return Parsedown::instance()->text($this->body);
+        return clean($this->bodyHtml());
     }
 
 
@@ -83,5 +88,20 @@ class Question extends Model
     public function getIsFavoritedCountAttribute()
     {
         return $this->favorites()->count();
+    }
+
+    public function getExcerptAttribute()
+    {
+        return $this->excerpt(250);
+    }
+
+    public function excerpt($length)
+    {
+        return Str::limit(strip_tags($this->bodyHtml()), $length);
+    }
+
+    public function bodyHtml()
+    {
+        return Parsedown::instance()->text($this->body);
     }
 }
