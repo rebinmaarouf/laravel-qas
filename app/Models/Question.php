@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\VotableTrait;
 use Parsedown;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Question extends Model
 {
     use HasFactory;
+    use VotableTrait;
     //
     protected $guarded = [];
 
@@ -81,18 +83,5 @@ class Question extends Model
     public function getIsFavoritedCountAttribute()
     {
         return $this->favorites()->count();
-    }
-
-    public function votes()
-    {
-        return $this->morphToMany(User::class, 'votable');
-    }
-    public function upVotes()
-    {
-        return $this->votes()->wherePivot('vote', 1);
-    }
-    public function downVotes()
-    {
-        return $this->votes()->wherePivot('vote', -1);
     }
 }
