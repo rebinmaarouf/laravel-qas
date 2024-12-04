@@ -30,26 +30,6 @@
                                 @csrf
                                 <input type="hidden" name="vote" value="-1">
                             </form>
-
-                            @can('accept', $answer)
-                                <a href="" title="mark this answer as best answer"
-                                    class="{{ $answer->status }} mt-2"
-                                    onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();">
-                                    <i class="fas fa-check fa-1x"></i>
-                                </a>
-
-                                <form action="{{ route('answers.accept', $answer->id) }}" method="POST"
-                                    id="accept-answer-{{ $answer->id }}" style="display: none">
-                                    @csrf
-                                </form>
-                            @else
-                                @if ($answer->is_best)
-                                    <a href="" title="The question owner accepted this answer as best answer"
-                                        class="{{ $answer->status }} mt-2">
-                                        <i class="fas fa-check fa-1x"></i>
-                                    </a>
-                                @endif
-                            @endcan
                         </div>
                         <div class="media-body">
                             {!! $answer->body_html !!}
@@ -57,12 +37,12 @@
                                 <div class="col-4">
                                     <div class="ms-auto">
                                         @can('update', $answer)
-                                            <a href="{{ route('questions.answers.edit', [$answer->id, $answer->id]) }}"
+                                            <a href="{{ route('questions.answers.edit', [$question->id, $answer->id]) }}"
                                                 class="btn btn-sm btn-outline-info">Edit</a>
                                         @endcan
                                         @can('delete', $answer)
                                             <form
-                                                action="{{ route('questions.answers.destroy', [$answer->id, $answer->id]) }}"
+                                                action="{{ route('questions.answers.destroy', [$question->id, $answer->id]) }}"
                                                 method="post" class="form-delete">
                                                 @csrf
                                                 @method('DELETE')
@@ -77,13 +57,10 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="media">
-                                        <span class="text-muted">Answered {{ $answer->created_date }}</span>
-                                        <div class="media-body d-flex justify-center">
-                                            <a href="{{ $answer->user->url }}" class="pe-2"><img
-                                                    src="{{ $answer->user->avatar }}" alt=""
-                                                    srcset=""></a>
-                                            <a href="{{ $answer->user->url }}">{{ $answer->user->name }}</a>
-                                        </div>
+                                        @include('shared._author', [
+                                            'model' => $answer,
+                                            'lable' => 'answered',
+                                        ])
                                     </div>
 
                                 </div>
