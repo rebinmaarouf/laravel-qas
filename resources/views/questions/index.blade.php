@@ -17,7 +17,7 @@
 
                     <div class="card-body">
                         @include('layouts._message')
-                        @foreach ($questions as $question)
+                        @forelse ($questions as $question)
                             <div class="media">
                                 <div class="float-start counters">
                                     <div class="vote">
@@ -62,7 +62,11 @@
                                 </div>
                             </div>
                             <hr>
-                        @endforeach
+                        @empty
+                            <div class="alert warning">
+                                <strong>Sorry</strong> There are no questions available.
+                            </div>
+                        @endforelse
                         <div class="pagination justify-content-center">
 
                             {{ $questions->links() }}

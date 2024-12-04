@@ -10,9 +10,7 @@ use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\VoteAnswerController;
 use App\Http\Controllers\VoteQuestionController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [QuestionsController::class, 'index']);
 
 // Route::get('logout', function () {
 //     auth()->logout();
